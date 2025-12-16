@@ -10,7 +10,7 @@ const FormButton = () => {
     <button
       disabled={pending}
       type="submit"
-      className="border rounded border-gray-400 px-4 py-2 mr-4 relative flex items-center justify-center shrink-0 whitespace-nowrap"
+      className="border rounded border-gray-400 px-4 py-2 relative flex items-center justify-center shrink-0 whitespace-nowrap"
     >
       {/* Texto: define el ancho */}
       <span className={pending ? "invisible" : "visible"}>Add Todo</span>

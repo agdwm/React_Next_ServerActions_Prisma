@@ -25,12 +25,16 @@ const FormTodo = () => {
   };
 
   return (
-    <form action={handleSubmit} className="mb-4 flex justify-center">
+    <form
+      action={handleSubmit}
+      className="flex justify-between gap-3"
+      ref={formRef}
+    >
       <input
         type="text"
         name="title"
         id="title"
-        className="border rounded border-gray-400 p-2 mr-2 flex-1"
+        className="border rounded border-gray-400 p-2 flex-1 w-full"
       />
       <FormButton />
     </form>

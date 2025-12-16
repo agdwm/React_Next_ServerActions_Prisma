@@ -25,3 +25,25 @@ export const createTodo = async (title: string) => {
     };
   }
 };
+
+export const deleteTodo = async (id: string) => {
+  if (!id || !id.trim()) {
+    return {
+      error: "ID is required (backend validation)",
+    };
+  }
+
+  try {
+    await prisma.todo.delete({
+      where: {
+        id,
+      },
+    });
+    revalidatePath("/todo");
+    return { success: true };
+  } catch (error) {
+    return {
+      error: "Error on deleting todo (backend validation)",
+    };
+  }
+};
