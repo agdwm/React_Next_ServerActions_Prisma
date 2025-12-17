@@ -29,7 +29,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <main className="container mx-auto px-4">
-          <Toaster position="top-right" reverseOrder={true} />
+          <Toaster
+            position="top-center"
+            reverseOrder={true}
+            toastOptions={{ className: "w-full" }}
+          />
           {children}
         </main>
       </body>

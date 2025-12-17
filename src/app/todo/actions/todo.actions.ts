@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export const createTodo = async (title: string) => {
+  // Backedn validation
   if (!title || !title.trim()) {
     return {
       error: "Title is required (backend validation)",
