@@ -3,7 +3,7 @@
 import { TodoZodSchema } from "@/app/todo/schema/todo.zod.schema";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { success, ZodError } from "zod";
+import { ZodError } from "zod";
 
 interface TodoResponse {
   success: boolean;
@@ -11,54 +11,55 @@ interface TodoResponse {
 }
 
 export const createTodo = async (title: string): Promise<TodoResponse> => {
-  // Backedn validation
   try {
-    TodoZodSchema.parse({ title });
-
-    await prisma.todo.create({
-      data: {
-        title,
-      },
-    });
-    // Synchronize the page after creating a new todo
-    revalidatePath("/todo");
-    return {
-      success: true,
-      message: "Todo created successfully (backend)",
-    };
-  } catch (error) {
-    if (error instanceof ZodError) {
+    // Backend validation with Zod
+    const validation = TodoZodSchema.safeParse({ title });
+    if (!validation.success) {
       return {
         success: false,
-        message: error.issues[0].message,
+        message: validation.error.issues[0].message,
       };
     }
 
+    await prisma.todo.create({
+      data: { title },
+    });
+
+    revalidatePath("/todo");
+    return {
+      success: true,
+      message: "Todo created successfully",
+    };
+  } catch (error) {
     return {
       success: false,
-      message: "Error on creating todo (backend)",
+      message: "Error creating todo",
     };
   }
 };
 
-export const deleteTodo = async (id: string) => {
-  if (!id || !id.trim()) {
-    return {
-      error: "ID is required (backend validation)",
-    };
-  }
-
+export const deleteTodo = async (id: string): Promise<TodoResponse> => {
   try {
+    if (!id?.trim()) {
+      return {
+        success: false,
+        message: "ID is required",
+      };
+    }
+
     await prisma.todo.delete({
-      where: {
-        id,
-      },
+      where: { id },
     });
+
     revalidatePath("/todo");
-    return { success: true };
+    return {
+      success: true,
+      message: "Todo deleted successfully",
+    };
   } catch (error) {
     return {
-      error: "Error on deleting todo (backend validation)",
+      success: false,
+      message: "Error deleting todo",
     };
   }
 };
