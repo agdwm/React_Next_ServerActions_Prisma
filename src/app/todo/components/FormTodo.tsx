@@ -15,26 +15,23 @@ const FormTodo = () => {
 
     try {
       TodoZodSchema.parse({ title });
+
+      const backendResponse = await createTodo(title);
+
+      if (!backendResponse.success) {
+        return toast.error(backendResponse.message);
+      }
+
+      toast.success(backendResponse.message);
     } catch (error) {
       if (error instanceof ZodError) {
         return error.issues.forEach((issue) => {
           toast.error(issue.message);
         });
-      } else {
-        toast.error("Invalid data");
       }
-      return;
+    } finally {
+      formRef.current?.reset();
     }
-
-    const result = await createTodo(title);
-
-    if (result.error) {
-      toast.error(result.error);
-      return;
-    }
-
-    toast.success("Todo created successfully");
-    formRef.current?.reset();
   };
 
   return (
