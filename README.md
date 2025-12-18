@@ -232,3 +232,10 @@ Las contribuciones son bienvenidas. Para cambios importantes, por favor abre un 
 ## 📄 Licencia
 
 Este proyecto es parte de un curso educativo y está disponible bajo licencia MIT.
+
+---
+
+## 👨‍💻 Autor
+
+Proyecto desarrollado como parte del curso Udemy de Next.js:
+[React JS con TypeScript y Next.js Curso Desarrollo FullStack](https://www.udemy.com/course/curso-react-js/)
