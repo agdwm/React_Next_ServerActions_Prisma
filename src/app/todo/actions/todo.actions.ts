@@ -3,7 +3,6 @@
 import { TodoZodSchema } from "@/app/todo/schema/todo.zod.schema";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { ZodError } from "zod";
 
 interface TodoResponse {
   success: boolean;
